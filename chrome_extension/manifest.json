@@ -1,7 +1,9 @@
 {
-  "name": "Plickers CSV import",
   "version": "0.3",
-  "description": "Plickers 匯入 CSV 題庫檔的小工具(在 Plickers 網站上才會啟用)",
+  "default_locale": "en",
+  "name": "__MSG_chrome_extension_name__",
+  "short_name": "PlickersImport",
+  "description": "__MSG_chrome_extension_description__",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
     "scripts": ["background.js"],
@@ -9,7 +11,7 @@
   },
   "page_action": {
     "default_popup": "popup.html",
-	"default_title" : "Plickers Import\n\n1.請先開啟 Plickers 網站並登入 \n\n2.按本圖示執行匯入程式 \n\n3.選取CSV檔案 \n\n4.設定匯入的資料欄位 \n\n開始匯入Plickers",
+	"default_title" : "__MSG_browser_action_title__",
     "default_icon": {
       "16": "images/csv_icon_16.png",
       "32": "images/csv_icon_32.png",

@@ -1,0 +1,63 @@
+{
+  "chrome_extension_name": {
+    "message": "Plickers CSV import"
+  },
+  "chrome_extension_description": {
+    "message": "A tool import CSV file into Plickers website (enabled in Plickers website)"
+  },
+  "popup_caption": {
+    "message": "Click the button and select CSV file to import."
+  },
+  "importCSVbutton_caption": {
+    "message": "Import CSV"
+	
+  },
+  "browser_action_title": {
+    "message": "Plickers Import\n\n1.sign in Plickers website \n\n2.click this popup icon \n\n3.select CSV file \n\n4.select the columns to import \n\n5.click submit to import data"
+  },
+  "sign_in_first": {
+	"message": "<h3>Sign in first</h3><p>1. Sign in Plickers website.</p>2. Select the CSV file to import.<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>"
+  },
+  "file_read_error": {
+	"message": "import failure, the file read error."
+  },
+  "columns_config": {
+	"message": "select columns to import"
+  },
+  "columns_import_from": {
+	"message": " :"
+  },
+  "columns_name0": {
+	"message": "Question"
+  },
+  "columns_name1": {
+	"message": "Correct Answer"
+  },
+  "columns_name2": {
+	"message": "Answer 1"
+  },
+  "columns_name3": {
+	"message": "Answer 2"
+  },
+  "columns_name4": {
+	"message": "Answer 3"
+  },
+  "columns_name5": {
+	"message": "Answer 4"
+  },
+  "set_checkbox_caption": {
+	"message": "import to a new SET"
+  },
+  "submit_button_caption": {
+	"message": "Submit"
+  },
+  "imported_to_set": {
+	"message": "Questions were imported to the new SET : "
+  },
+  "imported_to_folder": {
+	"message": "Questions were imported to the new folder : "
+  },
+  "page_reload": {
+	"message": "Reload this page to show the result. ( auto reload in 5 seconds )"
+  }
+}

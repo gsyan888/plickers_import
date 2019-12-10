@@ -161,7 +161,8 @@ getToken = function() {
 	if(typeof(token) != 'undefined' && token != null) {
 		return token;
 	} else {
-		showMessage('<h3>尚未登入 Plickers</h3><p>請先登入 Plickers 後，</p>才能匯入 CSV 檔案中的題庫。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
+		showMessage(chrome.i18n.getMessage('sign_in_first'), 5000);
+		
 		return null;
 	}
 }
@@ -401,7 +402,7 @@ get_csv_file = function(callback) {
 						//alert((textString))
 					} else {
 						textString = null;
-						alert('無法匯入，資料格式可能有誤');
+						alert(chrome.i18n.getMessage('file_read_error'));
 					}
 					if(typeof(callback) == 'function') {
 						callback(csvFilename, textString);
@@ -456,9 +457,11 @@ getOptionsAndSaveToLocalStorage = function() {
 }
 
 setImportColumnsAndWaitToSubmit = function(csvFilename, textString) {
-	var captions = ['題幹', '答案', '選項1', '選項2', '選項3', '選項4'];
+	//var captions = ['題幹', '答案', '選項1', '選項2', '選項3', '選項4'];
+	var captions = [chrome.i18n.getMessage('columns_name0'), chrome.i18n.getMessage('columns_name1'), chrome.i18n.getMessage('columns_name2'), chrome.i18n.getMessage('columns_name3'), chrome.i18n.getMessage('columns_name4'), chrome.i18n.getMessage('columns_name5') ];
 	
-	var html = '<h3>['+csvFilename+']設定匯出哪些欄位</h3>';
+	//var html = '<h3>['+csvFilename+']設定匯出哪些欄位</h3>';
+	var html = '<h3>['+csvFilename+'] '+chrome.i18n.getMessage('columns_config')+'</h3>';
 	
 	html += '<table  width="95%">';
 	
@@ -476,7 +479,8 @@ setImportColumnsAndWaitToSubmit = function(csvFilename, textString) {
 	
 	html += '</tr>';
 	for(var r=0; r<6; r++) {
-		html += '<td>'+captions[r]+'由哪一欄匯出:'+'</td>';
+		//html += '<td>'+captions[r]+'由哪一欄匯出:'+'</td>';
+		html += '<th align="right" nowrap>'+captions[r]+chrome.i18n.getMessage('columns_import_from')+'</th>';
 		var valueSaved = parseInt(csv_import_column_number[r]);
 		if( valueSaved > colTotal-1 ) {
 			valueSaved = 0;
@@ -491,8 +495,11 @@ setImportColumnsAndWaitToSubmit = function(csvFilename, textString) {
 		html += '</tr>';
 	}
 	html += '</table>';
-	html += '<p><input type="checkbox" id="isImportToSet" name="isImportToSet">所有題目變成一個 SET</p>';
-	html += '<p><center><input type="button" id="importButton" value="開始匯出"></center></p>';
+	//html += '<p><input type="checkbox" id="isImportToSet" name="isImportToSet">所有題目變成一個 SET</p>';
+	//html += '<p><center><input type="button" id="importButton" value="開始匯出"></center></p>';
+	html += '<p><input type="checkbox" id="isImportToSet" name="isImportToSet"> '+chrome.i18n.getMessage('set_checkbox_caption')+'</p>';
+	html += '<p><center><input type="button" id="importButton" value="'+chrome.i18n.getMessage('submit_button_caption')+'"></center></p>';
+
 	//console.log(html);
 	showMessage(html);
 	
@@ -516,7 +523,8 @@ importCSVdataToPlickers = function(csvFilename, csvData) {
 	get_currentTime( function(current_time) {
 		if(isSet) {
 			new_set(csvFilename, csvData, isAt, current_time, function() {
-				showMessage('已經將 CSV 檔案('+csvFilename+')中的題目<p>新增至命名為「'+csvFilename+'」的 SET 中了。</p>5秒後自動重新整理畫面後查看結果。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
+				//showMessage('已經將 CSV 檔案('+csvFilename+')中的題目<p>新增至命名為「'+csvFilename+'」的 SET 中了。</p>5秒後自動重新整理畫面後查看結果。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
+				showMessage(chrome.i18n.getMessage('imported_to_set')+csvFilename+'</p>'+chrome.i18n.getMessage('page_reload')+'<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
 				setTimeout( function() {
 					location.reload(true);
 				}, 5000);				
@@ -524,7 +532,8 @@ importCSVdataToPlickers = function(csvFilename, csvData) {
 		} else {
 			get_newFolderId(csvFilename, function(folderId) {
 				new_questions(folderId, csvData, isAt, current_time, function() {
-					showMessage('已經將 CSV 檔案('+csvFilename+')中的題目<p>新增至資料夾「'+csvFilename+'」中了。</p>5秒後自動重新整理畫面後查看結果。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
+					//showMessage('已經將 CSV 檔案('+csvFilename+')中的題目<p>新增至資料夾「'+csvFilename+'」中了。</p>5秒後自動重新整理畫面後查看結果。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
+					showMessage(chrome.i18n.getMessage('imported_to_folder')+csvFilename+'</p>'+chrome.i18n.getMessage('page_reload')+'<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>', 5000);
 					setTimeout( function() {
 						location.reload(true);
 					}, 5000);
@@ -533,6 +542,7 @@ importCSVdataToPlickers = function(csvFilename, csvData) {
 		}
 	});
 }
+
 
 if( token = getToken() ) {
 	get_csv_file(setImportColumnsAndWaitToSubmit);

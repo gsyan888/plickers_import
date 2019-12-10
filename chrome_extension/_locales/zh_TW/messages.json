@@ -1,0 +1,63 @@
+{
+  "chrome_extension_name": {
+    "message": "Plickers CSV import"
+  },
+  "chrome_extension_description": {
+    "message": "Plickers 匯入 CSV 題庫檔的小工具 (在 Plickers 網站上才會啟用)"
+  },
+  "popup_caption": {
+    "message": "請按底下的按鈕來選取要匯入的檔案"
+  },
+  "importCSVbutton_caption": {
+    "message": "匯入 CSV"
+	
+  },
+  "browser_action_title": {
+    "message": "Plickers Import\n\n1.請先開啟 Plickers 網站並登入 \n\n2.按本圖示執行匯入程式 \n\n3.選取CSV檔案 \n\n4.設定匯入的資料欄位 \n\n開始匯入Plickers"
+  },
+  "sign_in_first": {
+	"message": "<h3>尚未登入 Plickers</h3><p>請先登入 Plickers 後，</p>才能匯入 CSV 檔案中的題庫。<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>"
+  },
+  "file_read_error": {
+	"message": "無法匯入，資料格式可能有誤"
+  },
+  "columns_config": {
+	"message": "設定匯出哪些欄位"
+  },
+  "columns_import_from": {
+	"message": "："
+  },
+  "columns_name0": {
+	"message": "題幹"
+  },
+  "columns_name1": {
+	"message": "答案"
+  },
+  "columns_name2": {
+	"message": "選項1"
+  },
+  "columns_name3": {
+	"message": "選項2"
+  },
+  "columns_name4": {
+	"message": "選項3"
+  },
+  "columns_name5": {
+	"message": "選項4"
+  },
+  "set_checkbox_caption": {
+	"message": "所有題目變成一個 SET"
+  },
+  "submit_button_caption": {
+	"message": "開始匯出"
+  },
+  "imported_to_set": {
+	"message": "已經將題目匯入到新的 SET : "
+  },
+  "imported_to_folder": {
+	"message": "已經將題目匯入到新的資料夾 : "
+  },
+  "page_reload": {
+	"message": "重新整理畫面查看結果 ( 5秒後自動重新整理 )。"
+  }
+}
