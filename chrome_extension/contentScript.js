@@ -261,15 +261,17 @@ get_choices = function(data, isAt) {
 	var answer = data[isAt[1]];
 	var choices = [];
 	for(c=0; c<4; c++) {
-		var body = data[isAt[2+c]];
-		if( body != '' ) {
-			if( (c+1) == answer_convert_to_digit(answer) ) {
-				var correct = true;
-			} else {
-				var correct = false;
+		if( isAt[2+c] >= 0 && isAt[2+c] < data.length) {
+			var body = data[isAt[2+c]];
+			if( body != '' ) {
+				if( (c+1) == answer_convert_to_digit(answer) ) {
+					var correct = true;
+				} else {
+					var correct = false;
+				}
+				var choice = { 'body':body, 'correct':correct };
+				choices.push(choice);
 			}
-			var choice = { 'body':body, 'correct':correct };
-			choices.push(choice);
 		}
 	}
 	return choices;
@@ -437,7 +439,7 @@ getOptionsAndSaveToLocalStorage = function() {
 		importButton.removeEventListener('click', getOptionsAndSaveToLocalStorage, false);
 	} catch(e) { };
 		
-	for(var i=0; i<6; i++) {
+	for(var i=0; i<=6; i++) {
 		var radios = document.getElementsByName('csv_import_at['+i+']');
 		for (var r=0,length=radios.length; r<length; r++) {
 			if (radios[r].checked) {
@@ -473,6 +475,7 @@ setImportColumnsAndWaitToSubmit = function(csvFilename, textString) {
 	
 	var r= 0;
 	html += '<tr><td>&nbsp;</td>';
+	html += '<td>'+chrome.i18n.getMessage('columns_disable')+'</td>';
 	for(var c=0; c<colTotal; c++) {
 		html += '<td>'+(c+1)+'<br />'+csvData[r][c]+'</td>';
 	}
@@ -482,8 +485,13 @@ setImportColumnsAndWaitToSubmit = function(csvFilename, textString) {
 		//html += '<td>'+captions[r]+'由哪一欄匯出:'+'</td>';
 		html += '<th align="right" nowrap>'+captions[r]+chrome.i18n.getMessage('columns_import_from')+'</th>';
 		var valueSaved = parseInt(csv_import_column_number[r]);
-		if( valueSaved > colTotal-1 ) {
-			valueSaved = 0;
+		if( valueSaved < 0 || valueSaved > colTotal-1 ) {
+			valueSaved = -1;
+		}
+		if(valueSaved < 0) {
+			html += '<td><input type="radio" name="csv_import_at['+r+']" value="-1" checked></td>';
+		} else {
+			html += '<td><input type="radio" name="csv_import_at['+r+']" value="-1"></td>';
 		}
 		for(var c=0; c<colTotal; c++) {
 			var checked = '';

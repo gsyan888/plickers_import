@@ -27,6 +27,9 @@
   "columns_import_from": {
 	"message": " :"
   },
+  "columns_disable": {
+	"message": "disable"
+  },    
   "columns_name0": {
 	"message": "Question"
   },

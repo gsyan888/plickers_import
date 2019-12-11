@@ -27,6 +27,9 @@
   "columns_import_from": {
 	"message": "："
   },
+  "columns_disable": {
+	"message": "不使用"
+  },  
   "columns_name0": {
 	"message": "題幹"
   },
