@@ -416,7 +416,7 @@ get_csv_file = function(callback) {
 			})(file);
 
 			// Read CSV file as text
-			reader.readAsText(file);						
+			reader.readAsText(file, csv_file_encode);						
 		}
 		try {
 			inputFile.removeEventListener('change', file_handler, false);
@@ -551,7 +551,13 @@ importCSVdataToPlickers = function(csvFilename, csvData) {
 	});
 }
 
+//get the csv_file_encode from popup page selected
+var csv_file_encode = 'utf-8';
+chrome.storage.local.get('csv_file_encode', function(value) {
+	csv_file_encode = value['csv_file_encode'];
+});
 
 if( token = getToken() ) {
 	get_csv_file(setImportColumnsAndWaitToSubmit);
 }
+

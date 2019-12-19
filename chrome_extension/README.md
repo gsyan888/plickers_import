@@ -1,5 +1,5 @@
-# Plickers CSV Import (Chrome Extension) V0.4
-(Last updated : 2019.12.11)
+# Plickers CSV Import (Chrome Extension) V0.5
+(Last updated : 2019.12.19)
 
 A Chrome extension to import questions in csv file into Plickers website.
 
@@ -18,6 +18,9 @@ Install from [Chrome Web Store](https://chrome.google.com/webstore/detail/plicke
 LGPLv3
 
 ## ChangeLog
+### 2019.12.19
+ * popup page add a radio to select csv file text encode (utf-8 / big5 encoding).
+
 ### 2019.12.11
  * add a disable option to set the question's elements disable. ex. set the "Correct Answer" disalbe for survey questions, set "Answer 3" and "Answer 4" disable for true-false items.
  
