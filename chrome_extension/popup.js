@@ -16,16 +16,21 @@ importCSVbutton.onclick = function(element) {
 		break;
 	}
   }
+  
   chrome.storage.local.set({csv_file_encode:encode});
+  
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.insertCSS(
-        tabs[0].id,
-		{file: 'plickersImport.css'}
-	);
-    chrome.tabs.executeScript(
-        tabs[0].id,
-		{file: 'contentScript.js'}
-	);
+	var activeTab = tabs[0];
+	
+	chrome.scripting.insertCSS({
+		target: { tabId: activeTab.id },
+		files: ["plickersImport.css"]
+	});
+	
+	chrome.scripting.executeScript({
+		target: { tabId: activeTab.id },
+		files: ["contentScript.js"]
+	});
   });
 };
 

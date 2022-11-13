@@ -48,7 +48,7 @@ def get_random_id(size, chars=string.ascii_uppercase + string.digits):
   
 # convert answer to digit
 def answer_convert_to_digit(s) :
-	s = s.encode('utf-8')
+	s = s.encode('utf-8').decode()
 	ans = 0
 	if s=='1' or s=='A' or s=='a' or s=='ㄅ' or s=='甲' or s=='１' or s=='Ａ' or s=='一' :
 		ans = 1
@@ -126,6 +126,9 @@ def api_create_folder_and_get_id(token, folder_name) :
 		"Origin": "https://www.plickers.com/",
 		"User-Agent": USER_AGENT,
 		'x-auth-token' : token, 
+		'x-api-version' : "4.0.0",
+		'x-client-info' : '{"platform":"Web","appVersion":"58.21"}',
+		
 		"Content-Type": "application/json"
 	}
 	# sending post request 
@@ -170,9 +173,24 @@ def api_newquestions(token, folder_id, csv_file_name, column_numbers) :
 		#new question data
 		data = {
 			"body":question_body,
-			"xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
+			"bodySource": [{
+				"type": "paragraph",
+				"content": [{
+				"type": "text",
+				"text": question_body
+				}]
+			}],
+			"bodyHtml":"<p>"+question_body+"</p>",			
+			"media":None,
+			
+			# "xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
 			"template":"standard",
 			"image":"",
+			"measurements": {
+				"bodyFS": 64,
+				"choiceFS": 42
+			},
+			"layout": "bodyLeft",			
 			"folder":folder_id,
 			"repo":None,
 			"archived":False,
@@ -192,9 +210,16 @@ def api_newquestions(token, folder_id, csv_file_name, column_numbers) :
 					correct = True
 				else :
 					correct = False
-				choice = {}
-				choice.update(body=body)
-				choice.update(correct=correct)
+				choice = { 
+					'body': body, 
+					"bodyHtml": body,
+					"bodySource": [{
+					  "type": "text",
+					  "text": body
+					}],
+					'correct': correct,
+					"media": None
+				}				
 				choices.append(choice)
 		data.update(choices=choices)
 		
@@ -203,6 +228,8 @@ def api_newquestions(token, folder_id, csv_file_name, column_numbers) :
 			"Origin": "https://www.plickers.com/",
 			"User-Agent": USER_AGENT,
 			'x-auth-token' : token, 
+			'x-api-version' : "4.0.0",
+			'x-client-info' : '{"platform":"Web","appVersion":"58.21"}',
 			"Content-Type": "application/json"
 		}
 
@@ -253,15 +280,32 @@ def api_new_set(token, folder_name, csv_file_name, column_numbers) :
 		#ex. 0a58ae5f
 		questionId = get_random_id(8, "ilovetaiwain2019")
 		
-		question = {
-			"xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
-			"template":"standard",
-			"image":"",
-			"questionId":questionId
-		}
 		#question body
 		body = csv_data[column_numbers[0]] #.encode('utf-8')
-		question.update(body=body)
+
+		question = {
+			# "xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
+			"xLayout":None,
+			"template":"standard",
+			"image":"",
+			"questionId":questionId,
+			"body":body,
+			"bodySource": [{
+				"type": "paragraph",
+				"content": [{
+				"type": "text",
+				"text": body
+				}]
+			}],
+			"bodyHtml": "<p>"+body+"</p>",
+			"measurements": {
+				"bodyFS": 64,
+				"choiceFS": 42
+			},
+			"layout": "bodyLeft",
+			"media": None			
+		}
+		#question.update(body=body)
 		#choices 
 		choices = []
 		for c in range(4) :
@@ -272,9 +316,16 @@ def api_new_set(token, folder_name, csv_file_name, column_numbers) :
 					correct = True
 				else :
 					correct = False
-				choice = {}
-				choice.update(body=body)
-				choice.update(correct=correct)
+				choice = { 
+					'body': body, 
+					"bodyHtml": body,
+					"bodySource": [{
+					  "type": "text",
+					  "text": body
+					}],
+					'correct': correct,
+					"media": None
+				}				
 				choices.append(choice)
 		question.update(choices=choices)
 		questions.append(question)
@@ -296,6 +347,8 @@ def api_new_set(token, folder_name, csv_file_name, column_numbers) :
 		"Origin": "https://www.plickers.com/",
 		"User-Agent": USER_AGENT,
 		'x-auth-token' : token, 
+		'x-api-version' : "4.0.0",
+		'x-client-info' : '{"platform":"Web","appVersion":"58.21"}',
 		"Content-Type": "application/json"
 	}
 

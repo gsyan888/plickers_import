@@ -233,6 +233,9 @@ get_newFolderId = function(folder_name, callback) {
 	var token = getToken();
 	var headers = { 
 		'x-auth-token' : token,
+		'x-api-version' : '4.0.0',
+		'x-client-info' : {"platform":"Web","appVersion":"58.21"},
+		
 		'content-type' : 'application/json; charset=utf-8'
 	};
 	var url = api_url_base+'folders';
@@ -269,7 +272,17 @@ get_choices = function(data, isAt) {
 				} else {
 					var correct = false;
 				}
-				var choice = { 'body':body, 'correct':correct };
+				var choice = { 
+					'body': body, 
+					"bodyHtml": body,
+					"bodySource": [{
+					  "type": "text",
+					  "text": body
+					}
+					],
+					'correct': correct,
+					"media": null					
+				};
 				choices.push(choice);
 			}
 		}
@@ -286,6 +299,9 @@ new_set = function(name, csvData, isAt, current_time, callback) {
 	var token = getToken();
 	var headers = { 
 		'x-auth-token' : token,
+		'x-api-version' : '4.0.0',
+		'x-client-info' : {"platform":"Web","appVersion":"58.21"},
+		
 		'content-type' : 'application/json; charset=utf-8'
 	};
 
@@ -295,17 +311,42 @@ new_set = function(name, csvData, isAt, current_time, callback) {
 		if( localStorage['service.product'] &&  JSON.parse(localStorage['service.product']) == 'free' && i>5 && (name.toLowerCase()).indexOf('-enable-plus') < 0 ) {
 			break;
 		}
+		var id = get_random_id();
+		var question_body = csvData[i][isAt[0]];
 		var question = {
-			"xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
-			"template":"standard",
-			"image":""
+			"questionId": id,
+			"body": question_body,
+			"bodySource": [{
+				"type": "paragraph",
+				"content": [{
+				"type": "text",
+				"text": question_body
+				}]
+			}],
+			"bodyHtml": "<p>"+question_body+"</p>",			
+				
+			/*
+			 "xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
+			 */
+			"xLayout": null,			 
+			"image": "",
+			"template": "standard",
+			"version":0,
+			 
+			"measurements": {
+				"bodyFS": 64,
+				"choiceFS": 42
+			},
+			"layout": "bodyLeft",
+			"media": null			
 		}
-		question.questionId = get_random_id();
-		question.body = csvData[i][isAt[0]];
+		
 		question.choices = get_choices(csvData[i], isAt);
+		
 		questions.push(question);
 	}
 	var content = {
+		"media": null,		
 		"folder":null,
 		"archived":false,
 		"repo":null,
@@ -336,6 +377,9 @@ new_questions = function(folderId, csvData, isAt, current_time, callback) {
 	var token = getToken();
 	var headers = { 
 		'x-auth-token' : token,
+		'x-api-version' : '4.0.0',
+		'x-client-info' : {"platform":"Web","appVersion":"58.21"},
+		
 		'content-type' : 'application/json; charset=utf-8'
 	};
 
@@ -345,14 +389,34 @@ new_questions = function(folderId, csvData, isAt, current_time, callback) {
 		//new question data
 		var content = {
 			"body":question_body,
-			"xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
-			"template":"standard",
-			"image":"",
+			"bodySource": [{
+				"type": "paragraph",
+				"content": [{
+				"type": "text",
+				"text": question_body
+				}]
+			}],
+			"bodyHtml": "<p>"+question_body+"</p>",			
+			"media": null,
+			
+			/*
+			 "xLayout":{"bodyFS":64,"choiceFS":38,"bodyH":365,"version":2},
+			 */
+			"xLayout": null,			 
+			"image": "",
+			"template": "standard",
+			"version":0,
+			
+			"measurements": {
+				"bodyFS": 64,
+				"choiceFS": 42
+			},
+			"layout": "bodyLeft",
+			
 			"folder":folderId,
 			"repo":null,
 			"archived":false,
 			"createdOnMobile":false,
-			"version":0,
 			"clientModified":current_time,
 			"userCreated":current_time,
 			"lastEditedAt":current_time

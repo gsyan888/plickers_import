@@ -1,14 +1,15 @@
 {
-  "version": "0.6",
+  "version": "0.5",
   "default_locale": "en",
   "name": "__MSG_chrome_extension_name__",
   "short_name": "PlickersImport",
   "description": "__MSG_chrome_extension_description__",
-  "permissions": ["activeTab", "scripting", "declarativeContent", "storage"],
+  "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
-    "service_worker": "background.js"
-	},
-  "action": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
     "default_popup": "popup.html",
 	"default_title" : "__MSG_browser_action_title__",
     "default_icon": {
@@ -18,13 +19,11 @@
       "128": "images/csv_icon_128.png"
     }
   },
-    
   "icons": {
       "16": "images/csv_icon_16.png",
       "32": "images/csv_icon_32.png",
       "48": "images/csv_icon_48.png",
       "128": "images/csv_icon_128.png"
   },
-  
-  "manifest_version": 3
+  "manifest_version": 2
 }
